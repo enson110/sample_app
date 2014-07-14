@@ -19,7 +19,7 @@ describe "StaticPages" do
     before { visit help_path }
 
     let(:heading){ 'Help' }
-    let(:page_title){ 'Sample App | Help' }
+    let(:page_title){ 'Help' }
   end
 
   describe "Contact" do
@@ -32,6 +32,6 @@ describe "StaticPages" do
     before { visit about_path }
 
     let(:heading) { 'About Us' }
-    let(:page_title){ 'Sample App | About Us' }
+    let(:page_title){ 'About Us' }
   end
 end
