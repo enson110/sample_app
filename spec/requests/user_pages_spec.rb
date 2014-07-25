@@ -128,7 +128,7 @@ describe "GET /user_pages" do
         fill_in "Name",             with: new_name
         fill_in "Email",            with: new_email
         fill_in "Password",         with: user.password
-        fill_in "Confirm Password", with: user.password
+        fill_in "Password confirmation", with: user.password
         click_button "Save changes"
       end
 
@@ -143,6 +143,15 @@ describe "GET /user_pages" do
       before { click_button "Save changes" }
 
       it { should have_content('error') }
+    end
+
+    describe "forbidden attributes" do
+      let(:params) do
+        { user: { admin: true, password: user.password,
+                  password_confirmation: user.password } }
+      end
+      before { patch user_path(user), params }
+      specify { expect(user.reload).not_to be_admin }
     end
   end
 end
