@@ -13,6 +13,22 @@ describe "StaticPages" do
 
     let(:heading) { 'Sample App' }
     let(:page_title) { 'Home'}
+
+    describe "for signed-in users" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        FactoryGirl.create(:micropost, user: user, content: "No.1 micropost.")
+        FactoryGirl.create(:micropost, user: user, content: "No.2 micropost.")
+        sign_in user
+        visit root_path
+      end
+
+      it "should render the users feed" do
+        user.feed.each do |item|
+          expect(page).to have_selector("li##{item.id}", text: item.content)
+        end
+      end
+    end
   end
 
   describe "Help page" do
